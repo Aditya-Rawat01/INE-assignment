@@ -1,0 +1,17 @@
+# secrets
+.env
+
+# deps + build
+node_modules/
+backend/dist/
+frontend/dist/
+
+# local run artifacts
+soak-*.jsonl
+soak-*.csv
+headed-*.csv
+out.csv
+*.log
+
+# os
+.DS_Store
