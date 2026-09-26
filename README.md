@@ -21,6 +21,7 @@ Backend reads `../.env` (repo root). Required:
 | `DB_POOLER_URI` | Supabase pooler `:6543` — runtime queries, migrations, loads (direct `:5432` is IPv6-only; unreachable from most networks) |
 | `DB_DIRECT_URI` | Supabase direct `:5432` — kept for IPv6-capable networks |
 | `CRON_SECRET` | Shared secret for `POST /api/schedule/scrape` (`x-cron-secret` header) |
+| `FRONTEND_URL` | Public frontend origin for CORS allowlist (exact match; scripts/cron unaffected) |
 | `PORT` | Backend listen port (default 3000) |
 
 Frontend: `VITE_API_URL` (production API base; dev uses the Vite `/api` proxy).

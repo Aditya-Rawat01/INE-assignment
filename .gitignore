@@ -15,3 +15,9 @@ out.csv
 
 # os
 .DS_Store
+
+
+CONTEXT.md
+.agents/
+listings.csv
+products.csv

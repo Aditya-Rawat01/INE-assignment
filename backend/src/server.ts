@@ -1,3 +1,4 @@
+import cors from 'cors';
 import dotenv from 'dotenv';
 import path from 'node:path';
 // .env lives at repo root (dotenv/config alone would look in backend/).
@@ -10,6 +11,17 @@ import { trackedRouter } from './routes/tracked.js';
 import { exportRouter } from './routes/export.js';
 
 const app = express();
+
+/**
+ * Browsers enforce CORS; scripts/Postman/cron don't. The allowlist stops
+ * other sites' JS from calling this API — it is hygiene, not access control.
+ * Real gate for the write path is CRON_SECRET. Local dev uses the Vite proxy
+ * (same-origin), so CORS rarely triggers there.
+ */
+const allowedOrigins = [process.env.FRONTEND_URL, 'http://localhost:5173'].filter(
+  (o): o is string => !!o,
+);
+app.use(cors({ origin: allowedOrigins }));
 app.use(express.json());
 
 /** Warmup target: cheap, but touches the pool so first real query isn't cold. */
