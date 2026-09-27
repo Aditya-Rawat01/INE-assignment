@@ -21,3 +21,5 @@ CONTEXT.md
 .agents/
 listings.csv
 products.csv
+script.md
+skills-lock.json

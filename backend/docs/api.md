@@ -23,7 +23,7 @@ Unknown id → 404. Powers option chips + Track button.
 - `GET /api/tracked` — `{total, items: [{id, product_id, name, option_id, option_label, active, created_at}]}`.
 - `PATCH /api/tracked/:id {active}` — pause needs no scrape; resume (false→true) scrapes immediately + persists (`resumedResult`, `rowsWritten`). No-op change returns row as-is.
 
-## History (live) + export (to build)
+## History (live)
 
 - `GET /api/tracked/:id/history?limit=` (max 500) — `{tracked, latest (recent success or null), points[] (success rows, chronological, chart-ready), log[] (all attempts incl. failures, newest first)}`.
 - `GET /api/products/:id/preview?option=` — **ephemeral** live price for the product page; `{…, ephemeral: true, notStored: true}`, zero `scrape_runs` writes (verified 5→5).
@@ -33,16 +33,17 @@ Unknown id → 404. Powers option chips + Track button.
   `product_id,product_name,option_id,option_label,timestamp_utc,price,stock,outcome,error,source`
   (`source`: `history` = stored row, `live` = ephemeral now-row). One row per attempt,
   chronological; per-product exports append one fresh live row (never stored),
-  full export stays DB-pure. Bad `trackedId` → 400, unknown → 404..
+  full export stays DB-pure. Bad `trackedId` → 400, unknown → 404.
 
 Write-path invariant: only Track-click first scrape, resume scrape, and cron runs write `scrape_runs`. Previews and reads never do.
 
 ## Ops (live)
 
-- `GET /health` — `{ok:true}`, touches pool (`select 1`); cron-job.org warmup target
+- `GET /health` — `{ok:true}`, touches pool (`select 1`); scheduler warmup target
 - `POST /api/schedule/scrape` — header `x-cron-secret: $CRON_SECRET` (401 otherwise);
   sequential over active tracked, 500ms stagger, 90s deadline (`skipped` beyond it);
   per-attempt `scrape_runs` writes (`success`/`retried`/`failed` vocabulary);
   → `{ran, succeeded, failed, skipped, rowsWritten, persistErrors, ms, items[]}`
-- Headed: `npm run headed [-- productId optionId] [--csv out.csv]` — same core,
-  terminal narration via stage events, zero DB writes (see README).
+- Headed: `npm run headed [-- productId optionId] [--csv out.csv] [--append]` — same core,
+  terminal narration via stage events, zero DB writes (see README). `--csv` refuses
+  an existing file unless `--append` is passed.
