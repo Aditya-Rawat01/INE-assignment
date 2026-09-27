@@ -173,6 +173,7 @@ export default function HistoryView({ trackedId }: { trackedId: number }) {
         <h3>Scrape log ({data.log.length})</h3>
         <button type="button" onClick={() => void downloadCsv(trackedId)}>Export CSV</button>
       </div>
+      <div className="table-wrap">
       <table>
         <thead>
           <tr>
@@ -199,6 +200,7 @@ export default function HistoryView({ trackedId }: { trackedId: number }) {
           ))}
         </tbody>
       </table>
+      </div>
     </section>
   );
 }

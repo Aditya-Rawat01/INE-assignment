@@ -58,9 +58,9 @@ export default function TrackedTab({
 
   return (
     <section>
-      <div className="row">
+      <div className="row section-head">
         <h2>Tracked ({items.length})</h2>
-        <div className="row">
+        <div className="row section-actions">
           <button type="button" onClick={onRefresh}>Refresh</button>
           <button type="button" onClick={() => void downloadCsv()}>Export all CSV</button>
         </div>
@@ -92,10 +92,12 @@ export default function TrackedTab({
                 ) : (
                   <span className="muted">no history yet</span>
                 )}
-                <Link to={`/history/${t.id}`} className="btn">History</Link>
-                <button type="button" onClick={() => void flip(t)}>
-                  {t.active ? 'Pause' : 'Resume'}
-                </button>
+                <div className="actions">
+                  <Link to={`/history/${t.id}`} className="btn">History</Link>
+                  <button type="button" onClick={() => void flip(t)}>
+                    {t.active ? 'Pause' : 'Resume'}
+                  </button>
+                </div>
               </div>
             </li>
           );
