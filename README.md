@@ -1,7 +1,10 @@
 # Product Price Tracker
 
-> 🎥 **Submission video:** https://res.cloudinary.com/dlvcibxgx/video/upload/q_auto:best/v1790510884/submission_loud_3x_1.1x_trim-subtitled_1_vrslp4.mp4
-> 🟢 **Live app:** https://ine-assignment-nine.vercel.app/ · API: https://ine-assignment.ardev.in/health
+> 🎥 **Submission video:** <video controls src="https://res.cloudinary.com/dlvcibxgx/video/upload/q_auto:best/v1790510884/submission_loud_3x_1.1x_trim-subtitled_1_vrslp4.mp4" title="https://res.cloudinary.com/dlvcibxgx/video/upload/q_auto:best/v1790510884/submission_loud_3x_1.1x_trim-subtitled_1_vrslp4.mp4"></video>
+
+### 🟢 **Live app:** https://ine-assignment-nine.vercel.app/
+
+### 🟢 API: https://ine-assignment.ardev.in/health
 
 Track mock-store products (https://demo.inelabteamdev.com): search → pick product + option →
 scrape price/stock every 2h → history, per-product scrape log, CSV export.
@@ -19,13 +22,13 @@ cd frontend && npm install
 
 Backend reads `../.env` (repo root). Required:
 
-| Var | Purpose |
-|---|---|
+| Var             | Purpose                                                                                                                    |
+| --------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | `DB_POOLER_URI` | Supabase pooler `:6543` — runtime queries, migrations, loads (direct `:5432` is IPv6-only; unreachable from most networks) |
-| `DB_DIRECT_URI` | Supabase direct `:5432` — kept for IPv6-capable networks |
-| `CRON_SECRET` | Shared secret for `POST /api/schedule/scrape` (`x-cron-secret` header) |
-| `FRONTEND_URL` | Public frontend origin for CORS allowlist (exact match; scripts/cron unaffected) |
-| `PORT` | Backend listen port (default 3000) |
+| `DB_DIRECT_URI` | Supabase direct `:5432` — kept for IPv6-capable networks                                                                   |
+| `CRON_SECRET`   | Shared secret for `POST /api/schedule/scrape` (`x-cron-secret` header)                                                     |
+| `FRONTEND_URL`  | Public frontend origin for CORS allowlist (exact match; scripts/cron unaffected)                                           |
+| `PORT`          | Backend listen port (default 3000)                                                                                         |
 
 Frontend: `VITE_API_URL` (production API base; dev uses the Vite `/api` proxy).
 
@@ -39,9 +42,9 @@ npm run build && npm start   # production (tsc → dist)
 
 ## Scraping schedule (FastCron, q2h)
 
-| Job | When | Target |
-|---|---|---|
-| Warmup | hourly at `:55` | `GET /health` (touches DB pool; free tier sleeps without it) |
+| Job    | When                   | Target                                                          |
+| ------ | ---------------------- | --------------------------------------------------------------- |
+| Warmup | hourly at `:55`        | `GET /health` (touches DB pool; free tier sleeps without it)    |
 | Scrape | every 2 hours at `:00` | `POST /api/schedule/scrape` + `x-cron-secret` header, retry OFF |
 
 Scrape is sequential over active `tracked_products` (~500ms stagger, 90s deadline),
@@ -66,5 +69,5 @@ npm run headed [-- productId optionId] [--csv out.csv]
   exists** (delete it or add `--append`); `--append` adds rows to an existing
   file without repeating the header. Overwrite = `rm` + re-run (deliberately
   manual — no silent data loss).
-- Record this terminal 2–4 min for the submission video; slow/failing responses
-  appear as labeled retry lines absorbed live.
+- Recorded this in submission video; slow/failing responses
+  appear as labeled retry lines absorbed live, with max 6 retries.
