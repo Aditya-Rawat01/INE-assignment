@@ -147,7 +147,7 @@ async function targets(): Promise<Array<{ productId: number; optionId: string; n
       console.log(); // air before the verdict
       console.log(
         r.stock === 'sold_out'
-          ? magenta(`[done] SOLD OUT (success, price null)`) + dim(` in ${r.attempts} attempt(s), ${Date.now() - t0}ms total — NOT STORED (headed mode writes nothing)`)
+          ? magenta(`[done] SOLD OUT at listed price ${r.price}`) + dim(` in ${r.attempts} attempt(s), ${Date.now() - t0}ms total — NOT STORED (headed mode writes nothing)`)
           : green(bold(`[done] price ${r.price}, stock ${r.stockCount}`)) + dim(` in ${r.attempts} attempt(s), ${Date.now() - t0}ms total — NOT STORED (headed mode writes nothing)`),
       );
     } else {

@@ -4,10 +4,10 @@ const path = require('path');
 const BASE_URL = 'https://demo.inelabteamdev.com/api/v2/listings';
 const TOTAL_PAGES = 16;
 const LIMIT = 60;
-const TARGET_UNIQUE = 980;
+const TARGET_UNIQUE = 960;
 const MAX_ROUNDS = 20;
 const DELAY_MS = 400;
-const OUT_FILE = path.join(__dirname, 'test_listings.csv');
+const OUT_FILE = path.join(__dirname, 'listings.csv');
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
