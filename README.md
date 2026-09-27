@@ -1,13 +1,13 @@
 # Product Price Tracker
 
-> 🎥 **Submission video:** <video controls src="https://res.cloudinary.com/dlvcibxgx/video/upload/q_auto:best/v1790510884/submission_loud_3x_1.1x_trim-subtitled_1_vrslp4.mp4" title="https://res.cloudinary.com/dlvcibxgx/video/upload/q_auto:best/v1790510884/submission_loud_3x_1.1x_trim-subtitled_1_vrslp4.mp4"></video>
+> 🎥 **Submission video:** [![Submission demo — price tracker headed run](https://res.cloudinary.com/dlvcibxgx/video/upload/so_3/submission_loud_3x_1.1x_trim-subtitled_1_vrslp4.jpg)](https://res.cloudinary.com/dlvcibxgx/video/upload/q_auto:best/v1790510884/submission_loud_3x_1.1x_trim-subtitled_1_vrslp4.mp4)
 
 ### 🟢 **Live app:** https://ine-assignment-nine.vercel.app/
 
 ### 🟢 API: https://ine-assignment.ardev.in/health
 
-Track mock-store products (https://demo.inelabteamdev.com): search → pick product + option →
-scrape price/stock every 2h → history, per-product scrape log, CSV export.
+#### Track mock-store products (https://demo.inelabteamdev.com): 
+```search → pick product + option → scrape price/stock every 2h → history, per-product scrape log, CSV export.```
 
 ## Setup
 
@@ -49,6 +49,15 @@ npm run build && npm start   # production (tsc → dist)
 
 Scrape is sequential over active `tracked_products` (~500ms stagger, 90s deadline),
 one `scrape_runs` row per attempt (`success` / `retried` / `failed`).
+
+## Export
+
+`GET /api/history.csv` (or per product, `?trackedId=`) downloads the history:
+one row per attempt with product, option, UTC timestamp, price, stock, outcome,
+error, and `source`. **Per-product files end with a live row** (`source: live`)
+— a fresh check run at download time, never stored — so "then" (stored rows)
+sits next to "right now" in one file. The full-history export contains stored
+rows only and always matches the database exactly.
 
 ## Headed (= observable) mode
 
